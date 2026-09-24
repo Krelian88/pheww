@@ -1,63 +1,72 @@
 class_name Boss
 extends CharacterBody2D
 
-# SIGNALS START HERE: **************************
 signal died
-# SIGNALS END HERE ********************************
 
 # MOVEMENT STATE
 enum State { PATROL, CHARGE }
 
-# CONSTANTS START HERE: **********************************
 # THIS IS FOR PATROL BOUNDARIES (segment 4: y=0 to y=750, boss starts in top half)
 const PATROL_BOUNDARY_LEFT := 100.0
 const PATROL_BOUNDARY_RIGHT := 980.0
 const PATROL_BOUNDARY_TOP := 50.0
 const PATROL_BOUNDARY_BOTTOM := 350.0
-# CONSTANTS END *****************************************
 
-# VARIABLES START HERE: ***************************************
 # STATS
 @export_group("Stats")
-@export var MAX_HEALTH : int = 300
-	
+@export var MAX_HEALTH: int = 300
 @export_group("Movement")
-@export var SPEED_PHASE_1 : float = 100.0
-@export var SPEED_PHASE_2 : float = 180.0
-@export var CHARGE_SPEED : float = 350.0
+@export var SPEED_PHASE_1: float = 100.0
+@export var SPEED_PHASE_2: float = 180.0
+@export var CHARGE_SPEED: float = 350.0
+
 var health := MAX_HEALTH
 var phase := 1
 # MOVEMENT
 var speed := SPEED_PHASE_1
-var direction := 1.0  # 1 = right, -1 = left
-var direction_y := 1.0  # vertical:   1 = down,  -1 = up
+var direction := 1.0 # 1 = right, -1 = left
+var direction_y := 1.0 # vertical:   1 = down,  -1 = up
 # SHOOTING
-var shoot_timer : Timer = null
+var shoot_timer: Timer = null
 var bullet = preload("res://Scene/boss_bullet.tscn")
-var player : CharacterBody2D = null
-var segment_manager : Node = null
+var player: CharacterBody2D = null
+var segment_manager: Node = null
 # MOVEMENT STATE
 var state := State.PATROL
-var charge_timer : Timer = null
+var charge_timer: Timer = null
 var charge_direction := Vector2.ZERO
 # MINIONS
-var minion_timer : Timer = null
+var minion_timer: Timer = null
 # ENTRANCE
-var is_entering := true  # Frozen until entrance animation completes
+var is_entering := true # Frozen until entrance animation completes
 # DEATH ANIMATION
 var _is_dead := false
+
 @onready var death_anim = $death_anim
 @onready var boss_die_sound = $boss_die_sound
-# VARIABLES END HERE ***************************************
 
-# FUNCTIONS START HERE: ****************************************************
+
 func _ready() -> void:
+	health = MAX_HEALTH
+	speed = SPEED_PHASE_1
 	add_to_group("Enemies")
 	player = get_parent().get_node("Player")
 	segment_manager = get_parent().get_node("segment_manager")
 	_start_shoot_timer()
 	_start_charge_timer()
-	
+
+
+func _physics_process(_delta: float) -> void:
+	if is_entering:
+		return
+	match state:
+		State.PATROL:
+			_patrol()
+		State.CHARGE:
+			velocity = charge_direction * CHARGE_SPEED
+	move_and_slide()
+
+
 func take_damage(amount: int = 1) -> void:
 	if _is_dead:
 		return
@@ -68,6 +77,7 @@ func take_damage(amount: int = 1) -> void:
 		_enter_phase_2()
 	if health <= 0:
 		_die()
+
 
 func _die() -> void:
 	_is_dead = true
@@ -87,11 +97,13 @@ func _die() -> void:
 	died.emit()
 	queue_free()
 
+
 func _flash_damage() -> void:
 	var tween := create_tween()
 	tween.set_loops(3)
 	tween.tween_property(self, "modulate", Color.RED, 0.05)
 	tween.tween_property(self, "modulate", Color.WHITE, 0.05)
+
 
 func _enter_phase_2() -> void:
 	phase = 2
@@ -102,15 +114,6 @@ func _enter_phase_2() -> void:
 		charge_timer.wait_time = randf_range(1.5, 2.5)
 	_start_minion_timer()
 
-func _physics_process(_delta: float) -> void:
-	if is_entering:
-		return
-	match state:
-		State.PATROL:
-			_patrol()
-		State.CHARGE:
-			velocity = charge_direction * CHARGE_SPEED
-	move_and_slide()
 
 func _patrol() -> void:
 	velocity.x = speed * direction
@@ -123,6 +126,7 @@ func _patrol() -> void:
 		direction_y = -1.0
 	elif position.y <= PATROL_BOUNDARY_TOP:
 		direction_y = 1.0
+
 
 func _start_charge() -> void:
 	if is_entering or not player:
@@ -143,9 +147,11 @@ func _start_charge() -> void:
 	add_child(dur_timer)
 	dur_timer.start()
 
+
 func _end_charge() -> void:
 	state = State.PATROL
 	velocity = Vector2.ZERO
+
 
 func _start_charge_timer() -> void:
 	charge_timer = Timer.new()
@@ -155,6 +161,7 @@ func _start_charge_timer() -> void:
 	add_child(charge_timer)
 	charge_timer.start()
 
+
 func _start_shoot_timer() -> void:
 	shoot_timer = Timer.new()
 	shoot_timer.wait_time = 2.0
@@ -162,6 +169,7 @@ func _start_shoot_timer() -> void:
 	shoot_timer.timeout.connect(_shoot)
 	add_child(shoot_timer)
 	shoot_timer.start()
+
 
 func _shoot() -> void:
 	if is_entering or not player:
@@ -171,6 +179,7 @@ func _shoot() -> void:
 	new_bullet.position = global_position
 	get_parent().add_child(new_bullet)
 
+
 func _start_minion_timer() -> void:
 	minion_timer = Timer.new()
 	minion_timer.wait_time = randf_range(4.0, 8.0)
@@ -179,18 +188,19 @@ func _start_minion_timer() -> void:
 	add_child(minion_timer)
 	minion_timer.start()
 
+
 func _spawn_minion() -> void:
 	var enemy_scenes := [
 		preload("res://Scene/enemy.tscn"),
 		preload("res://Scene/enemy2.tscn"),
-		preload("res://Scene/enemy3.tscn")
+		preload("res://Scene/enemy3.tscn"),
 	]
 	var count := randi_range(1, 2)
 	for i in range(count):
 		var scene = enemy_scenes[randi() % enemy_scenes.size()]
-		var minion : EnemyBase = scene.instantiate()
-		var entries : Array = segment_manager.SPAWN_ENTRIES[3]
-		var entry : Dictionary = entries[randi() % entries.size()]
+		var minion: EnemyBase = scene.instantiate()
+		var entries: Array = segment_manager.SPAWN_ENTRIES[3]
+		var entry: Dictionary = entries[randi() % entries.size()]
 		minion.position = entry["from"]
 		minion.is_entering = true
 		var tween := create_tween()
@@ -198,13 +208,13 @@ func _spawn_minion() -> void:
 		tween.set_trans(Tween.TRANS_QUAD)
 		tween.tween_property(minion, "position", entry["to"], 0.8)
 		var enemy_id := minion.get_instance_id()
-		tween.tween_callback(func():
-			var e = instance_from_id(enemy_id) if enemy_id else null
-			if is_instance_valid(e):
-				e.is_entering = false
+		tween.tween_callback(
+			func():
+				var e = instance_from_id(enemy_id) if enemy_id else null
+				if is_instance_valid(e):
+					e.is_entering = false
 		)
 		minion.died.connect(segment_manager.on_enemy_died)
 		get_parent().add_child(minion)
 		segment_manager.enemies_alive += 1
 	minion_timer.wait_time = randf_range(4.0, 8.0)
-# FUNCTIONS END *****************************************************

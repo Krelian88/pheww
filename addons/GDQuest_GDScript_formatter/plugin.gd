@@ -22,6 +22,8 @@ const SETTING_FORMATTER_PATH = "formatter_path"
 const SETTING_LINT_ON_SAVE = "lint_on_save"
 const SETTING_LINT_LINE_LENGTH = "lint_line_length"
 const SETTING_LINT_IGNORED_RULES = "lint_ignored_rules"
+# Directories to ignore when Format on Save is enabled
+const SETTING_IGNORED_DIRECTORIES = "format_on_save_ignored_directories"
 
 const COMMAND_PALETTE_CATEGORY = "gdquest gdscript formatter/"
 const COMMAND_PALETTE_FORMAT_SCRIPT = "Format GDScript"
@@ -30,7 +32,7 @@ const COMMAND_PALETTE_INSTALL_UPDATE = "Install or Update Formatter"
 const COMMAND_PALETTE_UNINSTALL = "Uninstall Formatter"
 const COMMAND_PALETTE_REPORT_ISSUE = "Report Issue"
 
-const DEFAULT_SETTINGS = {
+var DEFAULT_SETTINGS = {
 	SETTING_FORMAT_ON_SAVE: false,
 	SETTING_USE_SPACES: false,
 	SETTING_INDENT_SIZE: 4,
@@ -40,11 +42,13 @@ const DEFAULT_SETTINGS = {
 	SETTING_LINT_ON_SAVE: false,
 	SETTING_LINT_LINE_LENGTH: 100,
 	SETTING_LINT_IGNORED_RULES: "",
+	SETTING_IGNORED_DIRECTORIES: PackedStringArray(["addons/"]),
 }
 
 ## Which gutter lint icons are shown in.
 ## By default, gutter 0 is for breakpoints and 1 is for things like overrides.
-const LINT_ICON_GUTTER := 2
+const GUTTER_LINT_ICON_INDEX = 2
+const GUTTER_LINT_ICONS_NAME = "gdscript_formatter_lint_icons"
 
 var connection_list: Array[Resource] = []
 var installer: FormatterInstaller = null
@@ -203,6 +207,24 @@ func _on_resource_saved(saved_resource: Resource) -> void:
 
 	var script := saved_resource as GDScript
 
+	var ignored_directories := get_editor_setting(SETTING_IGNORED_DIRECTORIES)
+	var path = script.resource_path.trim_prefix("res://")
+
+	var script_path_parts := path.split("/")
+
+	for directory: String in ignored_directories:
+		var normalized_dir := directory.trim_prefix("res://")
+		var directory_parts := normalized_dir.split("/")
+
+		var matches := true
+		for i in range(directory_parts.size()):
+			if directory_parts[i] != script_path_parts[i]:
+				matches = false
+				break
+
+		if matches:
+			return
+
 	if not has_command(get_editor_setting(SETTING_FORMATTER_PATH)) or not is_instance_valid(script):
 		return
 
@@ -213,7 +235,12 @@ func _on_resource_saved(saved_resource: Resource) -> void:
 
 		script.source_code = formatted_code
 		ResourceSaver.save(script)
-		script.reload()
+		# The argument (keep_state parameter) tells Godot to try to preserve the
+		# state of the script instance, like static variables. Without this,
+		# attempting to reload tool scripts will fail with an error because they
+		# are already instantiated in the editor and instantiated scripts are
+		# not allowed to force reload without unloading first.
+		script.reload(true)
 
 		var script_editor := EditorInterface.get_script_editor()
 		var open_script_editors := script_editor.get_open_script_editors()
@@ -556,40 +583,47 @@ func lint_code(script: GDScript) -> Array:
 ## Parses a lint issue line and returns a dictionary with issue information
 func parse_lint_issue(line: String) -> Dictionary:
 	# Expected format: filename:line:rule:severity: message
-	var parts = line.split(":", 4)
-	if parts.size() < 5:
-		return { }
-
-	return {
-		"line": int(parts[1]) - 1, # Convert to 0-based indexing
-		"rule": parts[2],
-		"severity": parts[3],
-		"message": parts[4].strip_edges(),
-	}
+	var regex = RegEx.new()
+	regex.compile(r"^(.*\.gd):(\d+):([^:]+):([^:]+):([\s\S]*)$")
+	var result = regex.search(line)
+	if result:
+		return {
+			"line": int(result.get_string(2)) - 1,
+			"rule": result.get_string(3),
+			"severity": result.get_string(4),
+			"message": result.get_string(5).strip_edges(),
+		}
+	return { }
 
 
 ## Applies lint highlighting to the code editor
 func apply_lint_highlights(code_edit: CodeEdit, issues: Array) -> void:
 	clear_lint_highlights(code_edit)
 
+	# Add and set up gutter for lint icons if not already present.
+	# We check by name to avoid conflicts with gutters added by other addons.
+	# Once added, the gutter is never removed so the layout doesn't shift on clear.
+	var has_lint_gutter := false
+	for i: int in code_edit.get_gutter_count():
+		if code_edit.get_gutter_name(i) == GUTTER_LINT_ICONS_NAME:
+			has_lint_gutter = true
+			break
+	if not has_lint_gutter:
+		code_edit.add_gutter(GUTTER_LINT_ICON_INDEX)
+		code_edit.set_gutter_name(GUTTER_LINT_ICON_INDEX, GUTTER_LINT_ICONS_NAME)
+		code_edit.set_gutter_type(GUTTER_LINT_ICON_INDEX, CodeEdit.GutterType.GUTTER_TYPE_ICON)
+		const EDITOR_ICON_DEFAULT_WIDTH = 16.0
+		code_edit.set_gutter_width(GUTTER_LINT_ICON_INDEX, EDITOR_ICON_DEFAULT_WIDTH * EditorInterface.get_editor_scale())
+
 	for issue in issues:
 		var line_number: int = issue.line
 		var severity: String = issue.severity
 
-		# Set line background color based on severity
-		var color: Color
-		if severity == "error":
-			color = Color(1, 0, 0, 0.1)
-		else: # warning
-			color = Color(1, 1, 0, 0.1)
-
+		var color := Color(1, 0, 0, 0.1) if severity == "error" else Color(1, 1, 0, 0.1)
 		code_edit.set_line_background_color(line_number, color)
-
-		# Add gutter icon for severity
-		var icon_name = "StatusError" if severity == "error" else "StatusWarning"
-		var icon = EditorInterface.get_editor_theme().get_icon(icon_name, "EditorIcons")
-		code_edit.set_gutter_type(LINT_ICON_GUTTER, CodeEdit.GutterType.GUTTER_TYPE_ICON)
-		code_edit.set_line_gutter_icon(line_number, LINT_ICON_GUTTER, icon)
+		var icon_name := "StatusError" if severity == "error" else "StatusWarning"
+		var icon := EditorInterface.get_editor_theme().get_icon(icon_name, "EditorIcons")
+		code_edit.set_line_gutter_icon(line_number, GUTTER_LINT_ICON_INDEX, icon)
 
 
 ## Prints a detailed summary of lint issues to the output
@@ -613,11 +647,19 @@ func print_lint_summary(issues: Array, script_path: String) -> void:
 	print_rich("[b]=== End Linting Results ===[/b]\n")
 
 
-## Clears all lint highlighting from the code editor
+## Clears all lint highlighting from the code editor.
+## The lint gutter is intentionally kept so the layout does not shift.
 func clear_lint_highlights(code_edit: CodeEdit) -> void:
+	var lint_gutter_index := -1
+	for i: int in code_edit.get_gutter_count():
+		if code_edit.get_gutter_name(i) == GUTTER_LINT_ICONS_NAME:
+			lint_gutter_index = i
+			break
+
 	for line in range(code_edit.get_line_count()):
 		code_edit.set_line_background_color(line, Color(0, 0, 0, 0))
-		code_edit.set_line_gutter_icon(line, LINT_ICON_GUTTER, null)
+		if lint_gutter_index != -1:
+			code_edit.set_line_gutter_icon(line, lint_gutter_index, null)
 
 
 ## Data structure to hold code editor state information
