@@ -10,8 +10,10 @@ config_version=5
 
 [application]
 
-config/name="TestProject"
+config/name="Pheww!"
 run/main_scene="uid://gosrxlgxonio"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="Pheww"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
