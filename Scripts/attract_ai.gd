@@ -1,3 +1,4 @@
+class_name AttractAI
 extends Node
 
 # CONSTANTS START HERE: *******************************************
@@ -7,7 +8,7 @@ const MOVE_INTERVAL := 3.0
 # CONSTANT END ***************************************************
 
 # VARIABLES START HERE: ******************************************
-var player: CharacterBody2D
+var player: Player
 var target_pos: Vector2
 var shoot_timer := 0.0
 var move_timer := 0.0
@@ -32,7 +33,7 @@ func _handle_movement(delta: float) -> void:
 	if move_timer >= MOVE_INTERVAL:
 		move_timer = 0.0
 		_pick_new_target()
-	var direction = player.global_position.direction_to(target_pos)
+	var direction := player.global_position.direction_to(target_pos)
 	player.velocity = direction * MOVE_SPEED
 
 
@@ -40,15 +41,15 @@ func _handle_shooting(delta: float) -> void:
 	shoot_timer += delta
 	if shoot_timer >= SHOOT_INTERVAL:
 		shoot_timer = 0.0
-		var enemies = get_tree().get_nodes_in_group("Enemies")
+		var enemies := get_tree().get_nodes_in_group("Enemies")
 		if enemies.is_empty():
 			return
-		var nearest = enemies[0]
-		for enemy in enemies:
+		var nearest := enemies[0] as Node2D
+		for enemy: Node2D in enemies:
 			if player.global_position.distance_to(enemy.global_position) < player.global_position.distance_to(nearest.global_position):
 				nearest = enemy
-		var gun = player.get_node("Gun")
-		var direction = player.global_position.direction_to(nearest.global_position)
+		var gun := player.get_node("Gun") as Sprite2D
+		var direction := player.global_position.direction_to(nearest.global_position)
 		gun.rotation = direction.angle()
 		gun.flip_v = nearest.global_position.x < player.global_position.x
 		player.shoot()
