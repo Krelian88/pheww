@@ -2,8 +2,9 @@ extends Area2D
 
 # VARIABLES START HERE: *******************************
 @export var damage := 3
-@onready var anim = $anim
+@onready var anim: AnimatedSprite2D = $anim
 # VARIABLES END ***********************************
+
 
 # FUNCTIONS START HERE: ************************************
 func _ready() -> void:
@@ -11,9 +12,10 @@ func _ready() -> void:
 	anim.play("explode")
 	anim.animation_finished.connect(_on_animation_finished)
 	await get_tree().physics_frame
-	for body in get_overlapping_bodies():
+	for body: Node2D in get_overlapping_bodies():
 		if body.is_in_group("Enemies"):
 			body.take_damage(damage)
+
 
 func _on_animation_finished() -> void:
 	anim.visible = false

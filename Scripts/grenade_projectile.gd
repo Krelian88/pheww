@@ -6,8 +6,9 @@ extends Area2D
 
 var direction := Vector2.ZERO
 var distance_traveled := 0.0
-var explosion_scene = preload("res://Scene/explosion.tscn")
+var explosion_scene: PackedScene = preload("res://Scene/explosion.tscn")
 # VARIABLES END ***************************************
+
 
 # FUNCTIONS START HERE: ***********************************
 func _physics_process(delta: float) -> void:
@@ -17,8 +18,9 @@ func _physics_process(delta: float) -> void:
 	if distance_traveled >= travel_distance:
 		_explode()
 
+
 func _explode() -> void:
-	var explosion = explosion_scene.instantiate()
+	var explosion := explosion_scene.instantiate() as Node2D
 	explosion.global_position = global_position
 	get_parent().add_child(explosion)
 	queue_free()

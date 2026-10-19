@@ -31,6 +31,10 @@ GameData="*uid://wabaxs4l6g7o"
 GuiTransitions="*uid://lbwvyqfdnu7x"
 DialogueManager="*uid://c3rodes2l3gxb"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/size/viewport_width=1080
