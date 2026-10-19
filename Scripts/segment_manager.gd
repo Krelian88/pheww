@@ -2,7 +2,7 @@ class_name SegmentManager
 extends Node
 
 # SIGNALS START HERE: **********************************************
-signal segment_cleared(segment_index)
+signal segment_cleared(segment_index: int)
 signal all_segments_cleared
 signal score_earned(points: int)
 #SIGNALS END ******************************************
@@ -84,12 +84,12 @@ var wall_bottom: StaticBody2D = null
 var player: CharacterBody2D = null
 var bgm: AudioStreamPlayer = null
 var boss_bgm: AudioStreamPlayer = null
-var enemy_scenes := [
+var enemy_scenes: Array[PackedScene] = [
 	preload("res://Scene/enemy.tscn"),
 	preload("res://Scene/enemy2.tscn"),
 	preload("res://Scene/enemy3.tscn"),
 ]
-var boss_scene = preload("res://Scene/boss.tscn")
+var boss_scene: PackedScene = preload("res://Scene/boss.tscn")
 var boss_alive := false
 var waiting_for_player := false
 var _indicator_tween: Tween = null
@@ -154,7 +154,7 @@ func spawn_boss() -> void:
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(new_boss, "position", Vector2(540, 80), 1.5)
 	tween.tween_callback(
-		func():
+		func() -> void:
 			if is_instance_valid(new_boss):
 				new_boss.is_entering = false
 	)
@@ -189,9 +189,9 @@ func _on_spawn_timer_timeout() -> void:
 	var entries: Array = SPAWN_ENTRIES[current_segment]
 	var entry: Dictionary = entries[randi() % entries.size()]
 	var batch := mini(randi_range(2, 4), enemies_to_spawn) # this changes the amount of enemies per wave, more is more
-	for i in range(batch):
+	for i: int in range(batch):
 		var pool: Array = SEGMENT_ENEMY_POOLS[current_segment]
-		var scene = enemy_scenes[pool[randi() % pool.size()]]
+		var scene: PackedScene = enemy_scenes[pool[randi() % pool.size()]]
 		var new_enemy: EnemyBase = scene.instantiate()
 		new_enemy.collision_mask = 0
 		var spawn_offset := Vector2(randf_range(-25, 25), randf_range(-15, 15))
@@ -203,8 +203,8 @@ func _on_spawn_timer_timeout() -> void:
 		tween.tween_property(new_enemy, "position", entry["to"], 0.8)
 		var enemy_id := new_enemy.get_instance_id()
 		tween.tween_callback(
-			func():
-				var e = instance_from_id(enemy_id) if enemy_id else null
+			func() -> void:
+				var e := instance_from_id(enemy_id) as EnemyBase
 				if is_instance_valid(e):
 					e.is_entering = false
 		)
@@ -262,7 +262,7 @@ func _process(_delta: float) -> void:
 func _show_indicator() -> void:
 	if _indicator_tween:
 		_indicator_tween.kill()
-	for ind in [move_indicator_left, move_indicator_right]:
+	for ind: AnimatedSprite2D in [move_indicator_left, move_indicator_right]:
 		if ind:
 			ind.visible = true
 			ind.play()
@@ -272,15 +272,15 @@ func _show_indicator() -> void:
 	_indicator_tween.set_loops() # change to set_loops(6) to limit blink count
 	_indicator_tween.tween_interval(0.4) # how long it stays VISIBLE
 	_indicator_tween.tween_callback(
-		func():
-			for ind in [move_indicator_left, move_indicator_right]:
+		func() -> void:
+			for ind: AnimatedSprite2D in [move_indicator_left, move_indicator_right]:
 				if ind:
 					ind.visible = false
 	)
 	_indicator_tween.tween_interval(0.3) # how long it stays INVISIBLE
 	_indicator_tween.tween_callback(
-		func():
-			for ind in [move_indicator_left, move_indicator_right]:
+		func() -> void:
+			for ind: AnimatedSprite2D in [move_indicator_left, move_indicator_right]:
 				if ind:
 					ind.visible = true
 			if indicator_sfx:
@@ -292,7 +292,7 @@ func _hide_indicator() -> void:
 	if _indicator_tween:
 		_indicator_tween.kill()
 		_indicator_tween = null
-	for ind in [move_indicator_left, move_indicator_right]:
+	for ind: AnimatedSprite2D in [move_indicator_left, move_indicator_right]:
 		if ind:
 			ind.visible = false
 
@@ -363,7 +363,7 @@ func draw_debug_boundaries() -> void: #colours to differentiate the segments, no
 		Color(0, 0, 1, 0.15),
 		Color(1, 1, 0, 0.15),
 	]
-	for i in range(SEGMENTS.size()):
+	for i: int in range(SEGMENTS.size()):
 		var seg: Dictionary = SEGMENTS[i]
 		var rect := ColorRect.new()
 		rect.color = colors[i]

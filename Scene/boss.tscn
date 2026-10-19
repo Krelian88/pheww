@@ -48,6 +48,10 @@ animations = [{
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_bv8a7")
+MAX_HEALTH = null
+SPEED_PHASE_1 = null
+SPEED_PHASE_2 = null
+CHARGE_SPEED = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1821781409]
 scale = Vector2(1.2812499, 1.2812499)

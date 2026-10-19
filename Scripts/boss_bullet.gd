@@ -1,3 +1,4 @@
+class_name BossBullet
 extends Area2D
 
 # VARIABLES START HERE: *******************************************
@@ -5,14 +6,17 @@ extends Area2D
 var direction := Vector2.ZERO
 # VARIABLES END ****************************************************
 
+
 # FUNCTIONS START HERE: *******************************************
 func _physics_process(delta: float) -> void:
 	position += direction * speed * delta
+
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		body.take_damage(15)
 		queue_free()
+
 
 func _on_area_entered(_area: Area2D) -> void:
 	pass

@@ -28,7 +28,7 @@ var direction := 1.0 # 1 = right, -1 = left
 var direction_y := 1.0 # vertical:   1 = down,  -1 = up
 # SHOOTING
 var shoot_timer: Timer = null
-var bullet = preload("res://Scene/boss_bullet.tscn")
+var bullet: PackedScene = preload("res://Scene/boss_bullet.tscn")
 var player: CharacterBody2D = null
 var segment_manager: Node = null
 # MOVEMENT STATE
@@ -42,8 +42,8 @@ var is_entering := true # Frozen until entrance animation completes
 # DEATH ANIMATION
 var _is_dead := false
 
-@onready var death_anim = $death_anim
-@onready var boss_die_sound = $boss_die_sound
+@onready var death_anim: AnimatedSprite2D = $death_anim
+@onready var boss_die_sound: AudioStreamPlayer = $boss_die_sound
 
 
 func _ready() -> void:
@@ -174,7 +174,7 @@ func _start_shoot_timer() -> void:
 func _shoot() -> void:
 	if is_entering or not player:
 		return
-	var new_bullet = bullet.instantiate()
+	var new_bullet := bullet.instantiate() as BossBullet
 	new_bullet.direction = global_position.direction_to(player.global_position)
 	new_bullet.position = global_position
 	get_parent().add_child(new_bullet)
@@ -196,8 +196,8 @@ func _spawn_minion() -> void:
 		preload("res://Scene/enemy3.tscn"),
 	]
 	var count := randi_range(1, 2)
-	for i in range(count):
-		var scene = enemy_scenes[randi() % enemy_scenes.size()]
+	for i: int in range(count):
+		var scene: PackedScene = enemy_scenes[randi() % enemy_scenes.size()]
 		var minion: EnemyBase = scene.instantiate()
 		var entries: Array = segment_manager.SPAWN_ENTRIES[3]
 		var entry: Dictionary = entries[randi() % entries.size()]
@@ -209,8 +209,8 @@ func _spawn_minion() -> void:
 		tween.tween_property(minion, "position", entry["to"], 0.8)
 		var enemy_id := minion.get_instance_id()
 		tween.tween_callback(
-			func():
-				var e = instance_from_id(enemy_id) if enemy_id else null
+			func() -> void:
+				var e := instance_from_id(enemy_id) as EnemyBase
 				if is_instance_valid(e):
 					e.is_entering = false
 		)
