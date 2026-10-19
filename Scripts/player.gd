@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 enum WeaponMode { NORMAL, TRIPLE, RAPID }
@@ -24,14 +25,14 @@ var fire_timer := 0.0
 const RAPID_FIRE_RATE := 0.12
 var grenade_scene = preload("res://Scene/grenade_projectile.tscn")
 @export var speed: float = 250.0
-@export var player_health : int = 100
+@export var player_health: int = 100
 @export var max_triple_ammo := 10
 @export var max_rapid_ammo := 30
 @export var hp_restore_percent := 15
 @export var grenades_per_pickup := 1
 var lives := 3
 var _is_dead := false
-var _blink_tween : Tween
+var _blink_tween: Tween
 @onready var run_anim = $run_anim
 var force_run := false
 @onready var death_anim = $death_anim
@@ -48,8 +49,9 @@ signal player_respawn_needed
 # SIGNALS END ****************************************************
 
 #CONSTANTS STATRS HERE: *************************************************
-const LEVEL_HEIGHT = 3000  # Total height of your level in pixels — change this freely
+const LEVEL_HEIGHT = 3000 # Total height of your level in pixels — change this freely
 #CONSTANTS END *****************************************************
+
 
 #Step 1 preload
 #FUNCTIONS START HERE: **********************************************************
@@ -60,14 +62,16 @@ func _ready() -> void:
 	camera.limit_left = 0
 	camera.limit_right = int(vp.x)
 	# Y: level is taller than the screen
-	camera.limit_top = 0					# top of the level
-	camera.limit_bottom = LEVEL_HEIGHT		# bottom of the level
+	camera.limit_top = 0 # top of the level
+	camera.limit_bottom = LEVEL_HEIGHT # bottom of the level
+
 
 # Called every frame. 'delta' is the elapsed time since
 func _process(_delta: float) -> void:
 	if player_health <= 0 and not _is_dead:
 		_is_dead = true
 		_handle_death()
+
 
 func _handle_death() -> void:
 	print("[Player] _handle_death triggered, health: ", player_health)
@@ -90,13 +94,14 @@ func _handle_death() -> void:
 	else:
 		get_tree().change_scene_to_file("res://Scene/game_over.tscn")
 
+
 func _physics_process(delta: float) -> void:
 	if input_enabled:
 		var direction = Input.get_vector("Move Left", "Move Right", "Move Up", "Move Down")
 		velocity = speed * direction
 		if fire_timer > 0:
 			fire_timer -= delta
-		
+
 		if weapon_mode == WeaponMode.RAPID:
 			if Input.is_action_pressed("Fire") and fire_timer <= 0:
 				shoot()
@@ -104,7 +109,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			if Input.is_action_just_pressed("Fire"):
 				shoot()
-		
+
 		if Input.is_action_just_pressed("Throw Grenade") and grenade_count > 0:
 			_throw_grenade()
 		if get_global_mouse_position() < global_position:
@@ -112,10 +117,10 @@ func _physics_process(delta: float) -> void:
 		else:
 			$Gun.flip_v = false
 	elif not attract_mode:
-			velocity = Vector2.ZERO
-	
+		velocity = Vector2.ZERO
+
 	move_and_slide()
-	
+
 	# Run animation toggle - only when not dead
 	if not _is_dead:
 		if velocity != Vector2.ZERO or force_run:
@@ -128,14 +133,16 @@ func _physics_process(delta: float) -> void:
 				run_anim.visible = false
 				run_anim.stop()
 				$Sprite2D.visible = true
-	
+
 	if is_jumping == false:
 		$JumpTimer.start()
 		is_jumping = true
 
+
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemies") and is_invincible == false:
 		take_damage(10)
+
 
 func take_damage(amount: int) -> void:
 	if is_invincible:
@@ -147,10 +154,12 @@ func take_damage(amount: int) -> void:
 	_start_blink()
 	$InvincibilityTimer.start()
 
+
 func _on_invincibility_timer_timeout() -> void:
 	pass
-	is_invincible	= false
+	is_invincible = false
 	modulate = Color.WHITE #Changes colour back to normal!
+
 
 func _start_blink() -> void:
 	if _blink_tween:
@@ -165,23 +174,25 @@ func _start_blink() -> void:
 	is_invincible = false
 	visible = true
 
+
 func shoot() -> void:
 	match weapon_mode:
 		WeaponMode.NORMAL:
-			_fire_bullet(0.0)	# 1 damage (default)
+			_fire_bullet(0.0) # 1 damage (default)
 			shoot_sound.pitch_scale = randi_range(1, 2)
 			shoot_sound.play()
 		WeaponMode.TRIPLE:
-			_fire_bullet(-15.0, 2, "triple")	# ← change 2 to whatever
+			_fire_bullet(-15.0, 2, "triple") # ← change 2 to whatever
 			_fire_bullet(0.0, 2, "triple")
 			_fire_bullet(15.0, 2, "triple")
 			_use_special_ammo()
 			triple_shot_sound.play()
 		WeaponMode.RAPID:
-			_fire_bullet(0.0, 3, "rapid")	# ← change 1 to whatever
+			_fire_bullet(0.0, 3, "rapid") # ← change 1 to whatever
 			_use_special_ammo()
 			if not rapid_shot_sound.playing:
 				rapid_shot_sound.play()
+
 
 func _fire_bullet(angle_offset_deg: float, damage: int = 1, bullet_type: String = "") -> void:
 	var new_bullet = bullet.instantiate()
@@ -191,7 +202,8 @@ func _fire_bullet(angle_offset_deg: float, damage: int = 1, bullet_type: String 
 	new_bullet.global_position = $Gun/Muzzle.global_position
 	new_bullet.global_rotation = $Gun.global_rotation + deg_to_rad(angle_offset_deg)
 
-func _use_special_ammo() -> void:	
+
+func _use_special_ammo() -> void:
 	match weapon_mode:
 		WeaponMode.TRIPLE:
 			triple_ammo -= 1
@@ -205,6 +217,7 @@ func _use_special_ammo() -> void:
 			if rapid_ammo <= 0:
 				weapon_mode = WeaponMode.NORMAL
 				weapon_mode_changed.emit(WeaponMode.NORMAL)
+
 
 func take_powerup(type: Powerup.Type) -> void:
 	match type:
@@ -229,6 +242,7 @@ func take_powerup(type: Powerup.Type) -> void:
 			grenade_count_changed.emit(grenade_count)
 			grenade_pickup_sound.play()
 
+
 func _throw_grenade() -> void:
 	var g = grenade_scene.instantiate()
 	get_parent().add_child(g)
@@ -238,11 +252,14 @@ func _throw_grenade() -> void:
 	grenade_count_changed.emit(grenade_count)
 	grenade_throw_sound.play()
 
+
 func _on_jump_timer_timeout() -> void:
 	$AnimationPlayer.play("jump")
 
+
 func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	is_jumping = false
+
 
 func respawn() -> void:
 	if _blink_tween:
@@ -264,6 +281,7 @@ func respawn() -> void:
 	_blink_tween.tween_callback(func(): visible = true)
 	_blink_tween.tween_interval(0.15)
 
+
 func end_invincibility() -> void:
 	if _blink_tween:
 		_blink_tween.kill()
@@ -271,8 +289,10 @@ func end_invincibility() -> void:
 	is_invincible = false
 	visible = true
 
+
 func set_camera_bottom_limit(y: float) -> void:
 	camera.limit_bottom = int(y)
+
 
 func set_camera_top_limit(y: float) -> void:
 	camera.limit_top = int(y)
