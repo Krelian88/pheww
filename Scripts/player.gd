@@ -4,18 +4,18 @@ extends CharacterBody2D
 enum WeaponMode { NORMAL, TRIPLE, RAPID }
 
 # VARIABLES STARTS: *****************************************************
-@onready var shoot_sound = $gun_shot
-@onready var camera = $Camera2D
-@onready var triple_shot_sound = $triple_shot_sound
-@onready var rapid_shot_sound = $rapid_shot_sound
-@onready var grenade_throw_sound = $grenade_throw_sound
-@onready var hp_powerup_sound = $hp_powerup_sound
-@onready var special_ammo_sound = $special_ammo_sound
-@onready var grenade_pickup_sound = $grenade_pickup_sound
-var input_enabled = true
-var is_jumping = false
-var bullet = preload("res://Scene/bullet.tscn")
-var is_invincible = false
+@onready var shoot_sound: AudioStreamPlayer = $gun_shot
+@onready var camera: Camera2D = $Camera2D
+@onready var triple_shot_sound: AudioStreamPlayer = $triple_shot_sound
+@onready var rapid_shot_sound: AudioStreamPlayer = $rapid_shot_sound
+@onready var grenade_throw_sound: AudioStreamPlayer = $grenade_throw_sound
+@onready var hp_powerup_sound: AudioStreamPlayer = $hp_powerup_sound
+@onready var special_ammo_sound: AudioStreamPlayer = $special_ammo_sound
+@onready var grenade_pickup_sound: AudioStreamPlayer = $grenade_pickup_sound
+var input_enabled := true
+var is_jumping := false
+var bullet: PackedScene = preload("res://Scene/bullet.tscn")
+var is_invincible := false
 var attract_mode := false
 var weapon_mode := WeaponMode.NORMAL
 var triple_ammo := 0
@@ -23,7 +23,7 @@ var rapid_ammo := 0
 var grenade_count := 0
 var fire_timer := 0.0
 const RAPID_FIRE_RATE := 0.12
-var grenade_scene = preload("res://Scene/grenade_projectile.tscn")
+var grenade_scene: PackedScene = preload("res://Scene/grenade_projectile.tscn")
 @export var speed: float = 250.0
 @export var player_health: int = 100
 @export var max_triple_ammo := 10
@@ -33,9 +33,9 @@ var grenade_scene = preload("res://Scene/grenade_projectile.tscn")
 var lives := 3
 var _is_dead := false
 var _blink_tween: Tween
-@onready var run_anim = $run_anim
+@onready var run_anim: AnimatedSprite2D = $run_anim
 var force_run := false
-@onready var death_anim = $death_anim
+@onready var death_anim: AnimatedSprite2D = $death_anim
 #VARIABLES END *******************************************************
 
 # SIGNALS START HERE: ***********************************************
@@ -57,7 +57,7 @@ const LEVEL_HEIGHT = 3000 # Total height of your level in pixels — change this
 #FUNCTIONS START HERE: **********************************************************
 # Called when the node enters the scen tree for the first time.
 func _ready() -> void:
-	var vp = get_viewport_rect().size
+	var vp := get_viewport_rect().size
 	# X: lock exactly to screen width — no horizontal scrolling
 	camera.limit_left = 0
 	camera.limit_right = int(vp.x)
@@ -97,7 +97,7 @@ func _handle_death() -> void:
 
 func _physics_process(delta: float) -> void:
 	if input_enabled:
-		var direction = Input.get_vector("Move Left", "Move Right", "Move Up", "Move Down")
+		var direction := Input.get_vector("Move Left", "Move Right", "Move Up", "Move Down")
 		velocity = speed * direction
 		if fire_timer > 0:
 			fire_timer -= delta
@@ -166,9 +166,9 @@ func _start_blink() -> void:
 		_blink_tween.kill()
 	_blink_tween = create_tween()
 	_blink_tween.set_loops(12)
-	_blink_tween.tween_callback(func(): visible = false)
+	_blink_tween.tween_callback(func() -> void: visible = false)
 	_blink_tween.tween_interval(0.1)
-	_blink_tween.tween_callback(func(): visible = true)
+	_blink_tween.tween_callback(func() -> void: visible = true)
 	_blink_tween.tween_interval(0.1)
 	await _blink_tween.finished
 	is_invincible = false
@@ -195,7 +195,7 @@ func shoot() -> void:
 
 
 func _fire_bullet(angle_offset_deg: float, damage: int = 1, bullet_type: String = "") -> void:
-	var new_bullet = bullet.instantiate()
+	var new_bullet := bullet.instantiate() as Bullet
 	new_bullet.damage = damage
 	new_bullet.bullet_type = bullet_type
 	get_parent().add_child(new_bullet)
@@ -244,7 +244,7 @@ func take_powerup(type: Powerup.Type) -> void:
 
 
 func _throw_grenade() -> void:
-	var g = grenade_scene.instantiate()
+	var g := grenade_scene.instantiate() as GrenadeProjectile
 	get_parent().add_child(g)
 	g.global_position = $Gun/Muzzle.global_position
 	g.direction = global_position.direction_to(get_global_mouse_position())
@@ -276,9 +276,9 @@ func respawn() -> void:
 	is_invincible = true
 	_blink_tween = create_tween()
 	_blink_tween.set_loops()
-	_blink_tween.tween_callback(func(): visible = false)
+	_blink_tween.tween_callback(func() -> void: visible = false)
 	_blink_tween.tween_interval(0.15)
-	_blink_tween.tween_callback(func(): visible = true)
+	_blink_tween.tween_callback(func() -> void: visible = true)
 	_blink_tween.tween_interval(0.15)
 
 

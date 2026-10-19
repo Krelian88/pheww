@@ -1,3 +1,4 @@
+class_name GrenadeProjectile
 extends Area2D
 
 # VARIABLES START HERE: ********************************
