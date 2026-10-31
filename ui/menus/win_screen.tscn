@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://uc6aqwdgrs7j"]
+
+[ext_resource type="Script" uid="uid://dtwsa57d8kfyo" path="res://ui/menus/win_screen.gd" id="1_qqrgm"]
+[ext_resource type="Theme" uid="uid://dnc6jb2ooa6pj" path="res://ui/menus/button_state.tres" id="1_y0a1q"]
+[ext_resource type="AudioStream" uid="uid://nyvwhi24n10h" path="res://audio/sfx/hover_sound.wav" id="2_qqrgm"]
+[ext_resource type="Texture2D" uid="uid://c2xv6qfd1fvl1" path="res://ui/menus/title_pheww.png" id="3_bywjl"]
+[ext_resource type="FontFile" uid="uid://cnj14jk4lv112" path="res://fonts/bitcount_grid_single_medium.ttf" id="3_hmhjm"]
+[ext_resource type="AudioStream" uid="uid://cnlco3qk3b5lt" path="res://audio/sfx/select_sound.wav" id="3_otsph"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bywjl"]
+font = ExtResource("3_hmhjm")
+font_size = 24
+font_color = Color(1, 0.77970624, 0.39732322, 1)
+
+[node name="WinScreen" type="Control" unique_id=907777748]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qqrgm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=531288279]
+z_index = 2
+position = Vector2(544, 269)
+texture = ExtResource("3_bywjl")
+
+[node name="MenuUI" type="CanvasLayer" parent="." unique_id=1029723071]
+layer = 10
+
+[node name="Panel" type="Panel" parent="MenuUI" unique_id=444330645]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -175.0
+offset_right = 250.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="MenuUI/Panel" unique_id=971652291]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 425.0
+theme = ExtResource("1_y0a1q")
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TitleImage" type="TextureRect" parent="MenuUI/Panel/VBox" unique_id=763998608]
+layout_mode = 2
+
+[node name="SubtitleLabel" type="Label" parent="MenuUI/Panel/VBox" unique_id=1900453831]
+layout_mode = 2
+text = "YOU WIN!"
+horizontal_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="MenuUI/Panel/VBox" unique_id=2016461774]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "PLAY AGAIN"
+
+[node name="QuitButton" type="Button" parent="MenuUI/Panel/VBox" unique_id=906773326]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "QUIT TO MENU"
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=570813781]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 479.0
+offset_right = 557.0
+offset_bottom = 502.0
+label_settings = SubResource("LabelSettings_bywjl")
+horizontal_alignment = 2
+
+[node name="HoverSfx" type="AudioStreamPlayer" parent="." unique_id=622623573]
+process_mode = 3
+stream = ExtResource("2_qqrgm")
+bus = &"SFX"
+
+[node name="SelectSfx" type="AudioStreamPlayer" parent="." unique_id=60393914]
+process_mode = 3
+stream = ExtResource("3_otsph")
+bus = &"SFX"

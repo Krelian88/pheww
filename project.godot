@@ -50,11 +50,14 @@ enabled=PackedStringArray("res://addons/GDQuest_GDScript_formatter/plugin.cfg", 
 [file_customization]
 
 folder_colors={
-"res://Assets/Art/": "blue",
-"res://Assets/Music/": "yellow",
-"res://Assets/SoundFX/": "yellow",
-"res://Scene/": "red",
-"res://Scripts/": "green"
+"res://audio/": "yellow",
+"res://enemies/": "red",
+"res://fonts/": "orange",
+"res://levels/": "pink",
+"res://pickups/": "gray",
+"res://player/": "green",
+"res://ui/": "purple",
+"res://weapons/": "teal"
 }
 
 [gui_transitions]

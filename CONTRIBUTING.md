@@ -60,7 +60,11 @@ func take_damage(amount: int) -> void:
 - Sprites are made in Aseprite and imported with the Aseprite importer.
 - New audio nodes go on the `BGM` or `SFX` bus.
 - Move or rename files only in Godot's FileSystem panel, never in File
-  Explorer. Godot updates the references for you.
+  Explorer. Godot updates the references in scenes and resources for you.
+- Godot does not update paths written in scripts (`preload("res://...")`).
+  After a move, search the scripts for the old path and fix it by hand.
+- Folder and file names are snake_case. Keep a feature's scene, script and
+  art in the same folder; see the layout in `README.md`.
 
 ## Before you commit
 

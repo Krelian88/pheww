@@ -38,17 +38,23 @@ tree, workbench, save slots) is in progress.
 
 ## Project layout
 
-| Folder     | Contents                            |
-| ---------- | ----------------------------------- |
-| `Assets/`  | Art, fonts, music and sound effects |
-| `Scene/`   | Scenes (`.tscn`)                    |
-| `Scripts/` | GDScript files                      |
-| `Shaders/` | Shaders, including the CRT effect   |
-| `Tres/`    | Saved resources (`.tres`)           |
-| `addons/`  | Third-party plugins                 |
+Folders are snake_case and grouped by feature: each scene sits next to its
+script, art and data. Files several features share live in `audio/` and
+`fonts/`.
 
-This layout is being moved to snake_case folders grouped by feature. See
-`CONTRIBUTING.md`.
+| Folder       | Contents                                              |
+| ------------ | ----------------------------------------------------- |
+| `audio/`     | Music (`music/`) and sound effects (`sfx/`)           |
+| `autoloads/` | Global singletons, such as `game_data.gd`             |
+| `enemies/`   | `enemy_base.gd`, one folder per enemy, and the boss   |
+| `fonts/`     | Fonts                                                 |
+| `levels/`    | The game level, segment manager, backgrounds, props   |
+| `pickups/`   | Power-ups and their sprites                           |
+| `player/`    | The player, gun and attract-mode AI                   |
+| `ui/`        | HUD art, menus and the CRT overlay                    |
+| `weapons/`   | Bullets and grenades                                  |
+| `_archive/`  | Unused assets kept for reference; Godot ignores it    |
+| `addons/`    | Third-party plugins                                   |
 
 ## Plugins in use
 
