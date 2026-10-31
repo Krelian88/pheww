@@ -1,13 +1,13 @@
 extends Control
 
 # ONREADY VARIABLES START HERE: *****************************************************
-@onready var bgm_slider: HSlider = $menu_ui/CenterContainer/panel/MarginContainer/vbox/bgm_slider
-@onready var sfx_slider: HSlider = $menu_ui/CenterContainer/panel/MarginContainer/vbox/sfx_slider
-@onready var crt_toggle: CheckButton = $menu_ui/CenterContainer/panel/MarginContainer/vbox/crt_row/crt_toggle
-@onready var back_button: Button = $menu_ui/CenterContainer/panel/MarginContainer/vbox/back_button
-@onready var hover_sound: AudioStreamPlayer = $hover_sound
-@onready var select_sound: AudioStreamPlayer = $select_sound
-@onready var toggle_sound: AudioStreamPlayer = $menu_ui/CenterContainer/panel/MarginContainer/vbox/toggle_sound
+@onready var bgm_slider: HSlider = %BgmSlider
+@onready var sfx_slider: HSlider = %SfxSlider
+@onready var crt_toggle: CheckButton = %CrtToggle
+@onready var back_button: Button = %BackButton
+@onready var hover_sound: AudioStreamPlayer = $HoverSfx
+@onready var select_sound: AudioStreamPlayer = $SelectSfx
+@onready var toggle_sound: AudioStreamPlayer = %ToggleSfx
 # ONREADY VARIABLES END ************************************************************
 
 # VARIABLES START HERE: ********************************************************

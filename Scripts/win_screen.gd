@@ -1,11 +1,11 @@
 extends Node
 
 # ONREADY VARIABLES START HERE: ****************************************
-@onready var play_again_button: Button = $menu_ui/panel/vbox/play_again_button
-@onready var quit_button: Button = $menu_ui/panel/vbox/quit_button
-@onready var hover_sound: AudioStreamPlayer = $hover_sound
-@onready var select_sound: AudioStreamPlayer = $select_sound
-@onready var score_label: Label = $score_label
+@onready var play_again_button: Button = %PlayAgainButton
+@onready var quit_button: Button = %QuitButton
+@onready var hover_sound: AudioStreamPlayer = $HoverSfx
+@onready var select_sound: AudioStreamPlayer = $SelectSfx
+@onready var score_label: Label = $ScoreLabel
 # ONREADY VARIABLES END ************************************************
 
 

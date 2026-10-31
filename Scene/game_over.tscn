@@ -13,7 +13,7 @@ font = ExtResource("3_3p3j6")
 font_size = 24
 font_color = Color(1, 0.68215865, 0.4288597, 1)
 
-[node name="game_over" type="Control" unique_id=1237557469]
+[node name="GameOver" type="Control" unique_id=1237557469]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,11 +22,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xnpu1")
 
-[node name="menu_ui" type="CanvasLayer" parent="." unique_id=1294773601]
+[node name="MenuUI" type="CanvasLayer" parent="." unique_id=1294773601]
 process_mode = 3
 layer = 10
 
-[node name="panel" type="Panel" parent="menu_ui" unique_id=2028546140]
+[node name="Panel" type="Panel" parent="MenuUI" unique_id=2028546140]
 custom_minimum_size = Vector2(400, 250)
 anchors_preset = 8
 anchor_left = 0.5
@@ -40,7 +40,7 @@ offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="vbox" type="VBoxContainer" parent="menu_ui/panel" unique_id=214933586]
+[node name="VBox" type="VBoxContainer" parent="MenuUI/Panel" unique_id=214933586]
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 250.0
@@ -48,22 +48,24 @@ theme = ExtResource("1_mjsgh")
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="title_label" type="Label" parent="menu_ui/panel/vbox" unique_id=282361718]
+[node name="TitleLabel" type="Label" parent="MenuUI/Panel/VBox" unique_id=282361718]
 layout_mode = 2
 text = "GAME OVER"
 horizontal_alignment = 1
 
-[node name="retry_button" type="Button" parent="menu_ui/panel/vbox" unique_id=1337163854]
+[node name="RetryButton" type="Button" parent="MenuUI/Panel/VBox" unique_id=1337163854]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "RETRY"
 
-[node name="quit_button" type="Button" parent="menu_ui/panel/vbox" unique_id=1723788681]
+[node name="QuitButton" type="Button" parent="MenuUI/Panel/VBox" unique_id=1723788681]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "QUIT TO MENU"
 
-[node name="score_label" type="Label" parent="." unique_id=13941942]
+[node name="ScoreLabel" type="Label" parent="." unique_id=13941942]
 layout_mode = 0
 offset_left = 523.0
 offset_top = 297.0
@@ -72,12 +74,12 @@ offset_bottom = 327.0
 label_settings = SubResource("LabelSettings_t757r")
 horizontal_alignment = 2
 
-[node name="hover_sound" type="AudioStreamPlayer" parent="." unique_id=241505498]
+[node name="HoverSfx" type="AudioStreamPlayer" parent="." unique_id=241505498]
 process_mode = 3
 stream = ExtResource("1_lwxdm")
 bus = &"SFX"
 
-[node name="select_sound" type="AudioStreamPlayer" parent="." unique_id=1706281577]
+[node name="SelectSfx" type="AudioStreamPlayer" parent="." unique_id=1706281577]
 process_mode = 3
 stream = ExtResource("2_mjsgh")
 bus = &"SFX"
@@ -87,7 +89,7 @@ position = Vector2(539.3701, 359.5)
 scale = Vector2(0.46192998, 0.400974)
 texture = ExtResource("6_t757r")
 
-[node name="game_over_bgm" type="AudioStreamPlayer" parent="." unique_id=1381643730]
+[node name="GameOverBgm" type="AudioStreamPlayer" parent="." unique_id=1381643730]
 stream = ExtResource("7_qf1nx")
 autoplay = true
 bus = &"BGM"

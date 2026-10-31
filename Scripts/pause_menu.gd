@@ -2,11 +2,11 @@ class_name PauseMenu
 extends Control
 
 # ONREADY VARIABLES START HERE: ****************************************
-@onready var resume_button: Button = $menu_ui/panel/vbox/resume_button
-@onready var options_button: Button = $menu_ui/panel/vbox/options_button
-@onready var quit_button: Button = $menu_ui/panel/vbox/quit_button
-@onready var hover_sound: AudioStreamPlayer = $hover_sound
-@onready var select_sound: AudioStreamPlayer = $select_sound
+@onready var resume_button: Button = %ResumeButton
+@onready var options_button: Button = %OptionsButton
+@onready var quit_button: Button = %QuitButton
+@onready var hover_sound: AudioStreamPlayer = $HoverSfx
+@onready var select_sound: AudioStreamPlayer = $SelectSfx
 # ONREADY VARIABLES END ****************************************
 
 # VARIABLES START HERE: ***************************************
@@ -49,11 +49,11 @@ func _on_options_pressed() -> void:
 	await _flash_button(options_button)
 	select_sound.play()
 	await get_tree().create_timer(0.3).timeout
-	$menu_ui.visible = false
+	$MenuUI.visible = false
 	var opts := options_menu.instantiate()
 	add_child(opts)
 	await opts.tree_exited
-	$menu_ui.visible = true
+	$MenuUI.visible = true
 
 
 func _on_quit_pressed() -> void:

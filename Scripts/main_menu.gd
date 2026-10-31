@@ -1,13 +1,13 @@
 extends Control
 
 # ONREADY VARIABLES START HERE: *******************************************
-@onready var game_viewport: SubViewport = $game_viewport_container/game_viewport
-@onready var play_button: Button = $menu_ui/center/vbox/play_button
-@onready var quit_button: Button = $menu_ui/center/vbox/quit_button
-@onready var menu_bgm: AudioStreamPlayer = $menu_bgm
-@onready var hover_sound: AudioStreamPlayer = $hover_sound
-@onready var select_sound: AudioStreamPlayer = $select_sound
-@onready var options_button: Button = $menu_ui/center/vbox/options_button
+@onready var game_viewport: SubViewport = %GameViewport
+@onready var play_button: Button = %PlayButton
+@onready var quit_button: Button = %QuitButton
+@onready var menu_bgm: AudioStreamPlayer = $MenuBgm
+@onready var hover_sound: AudioStreamPlayer = $HoverSfx
+@onready var select_sound: AudioStreamPlayer = $SelectSfx
+@onready var options_button: Button = %OptionsButton
 # ONREADY VARIABLES END ************************************************************
 
 # VARIABLES START HERE: ****************************************

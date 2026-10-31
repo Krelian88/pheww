@@ -12,7 +12,7 @@ font = ExtResource("3_hmhjm")
 font_size = 24
 font_color = Color(1, 0.77970624, 0.39732322, 1)
 
-[node name="win_screen" type="Control" unique_id=907777748]
+[node name="WinScreen" type="Control" unique_id=907777748]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,10 +26,10 @@ z_index = 2
 position = Vector2(544, 269)
 texture = ExtResource("3_bywjl")
 
-[node name="menu_ui" type="CanvasLayer" parent="." unique_id=1029723071]
+[node name="MenuUI" type="CanvasLayer" parent="." unique_id=1029723071]
 layer = 10
 
-[node name="panel" type="Panel" parent="menu_ui" unique_id=444330645]
+[node name="Panel" type="Panel" parent="MenuUI" unique_id=444330645]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -42,7 +42,7 @@ offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="vbox" type="VBoxContainer" parent="menu_ui/panel" unique_id=971652291]
+[node name="VBox" type="VBoxContainer" parent="MenuUI/Panel" unique_id=971652291]
 layout_mode = 0
 offset_right = 500.0
 offset_bottom = 425.0
@@ -50,25 +50,27 @@ theme = ExtResource("1_y0a1q")
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="title_label" type="TextureRect" parent="menu_ui/panel/vbox" unique_id=763998608]
+[node name="TitleImage" type="TextureRect" parent="MenuUI/Panel/VBox" unique_id=763998608]
 layout_mode = 2
 
-[node name="subtitle_label" type="Label" parent="menu_ui/panel/vbox" unique_id=1900453831]
+[node name="SubtitleLabel" type="Label" parent="MenuUI/Panel/VBox" unique_id=1900453831]
 layout_mode = 2
 text = "YOU WIN!"
 horizontal_alignment = 1
 
-[node name="play_again_button" type="Button" parent="menu_ui/panel/vbox" unique_id=2016461774]
+[node name="PlayAgainButton" type="Button" parent="MenuUI/Panel/VBox" unique_id=2016461774]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "PLAY AGAIN"
 
-[node name="quit_button" type="Button" parent="menu_ui/panel/vbox" unique_id=906773326]
+[node name="QuitButton" type="Button" parent="MenuUI/Panel/VBox" unique_id=906773326]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "QUIT TO MENU"
 
-[node name="score_label" type="Label" parent="." unique_id=570813781]
+[node name="ScoreLabel" type="Label" parent="." unique_id=570813781]
 layout_mode = 0
 offset_left = 517.0
 offset_top = 479.0
@@ -77,12 +79,12 @@ offset_bottom = 502.0
 label_settings = SubResource("LabelSettings_bywjl")
 horizontal_alignment = 2
 
-[node name="hover_sound" type="AudioStreamPlayer" parent="." unique_id=622623573]
+[node name="HoverSfx" type="AudioStreamPlayer" parent="." unique_id=622623573]
 process_mode = 3
 stream = ExtResource("2_qqrgm")
 bus = &"SFX"
 
-[node name="select_sound" type="AudioStreamPlayer" parent="." unique_id=60393914]
+[node name="SelectSfx" type="AudioStreamPlayer" parent="." unique_id=60393914]
 process_mode = 3
 stream = ExtResource("3_otsph")
 bus = &"SFX"

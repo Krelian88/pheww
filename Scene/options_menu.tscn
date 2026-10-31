@@ -9,7 +9,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_saexc"]
 bg_color = Color(0.38109186, 0.38109186, 0.38109186, 1)
 
-[node name="options_menu" type="Control" unique_id=1359307511]
+[node name="OptionsMenu" type="Control" unique_id=1359307511]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -19,73 +19,76 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xpukm")
 
-[node name="menu_ui" type="CanvasLayer" parent="." unique_id=1378313375]
+[node name="MenuUI" type="CanvasLayer" parent="." unique_id=1378313375]
 layer = 10
 
-[node name="CenterContainer" type="CenterContainer" parent="menu_ui" unique_id=767043847]
+[node name="CenterContainer" type="CenterContainer" parent="MenuUI" unique_id=767043847]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="panel" type="PanelContainer" parent="menu_ui/CenterContainer" unique_id=1495962121]
+[node name="Panel" type="PanelContainer" parent="MenuUI/CenterContainer" unique_id=1495962121]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_saexc")
 
-[node name="MarginContainer" type="MarginContainer" parent="menu_ui/CenterContainer/panel" unique_id=1337118256]
+[node name="MarginContainer" type="MarginContainer" parent="MenuUI/CenterContainer/Panel" unique_id=1337118256]
 layout_mode = 2
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="vbox" type="VBoxContainer" parent="menu_ui/CenterContainer/panel/MarginContainer" unique_id=1923223256]
+[node name="VBox" type="VBoxContainer" parent="MenuUI/CenterContainer/Panel/MarginContainer" unique_id=1923223256]
 layout_mode = 2
 theme = ExtResource("1_ou42m")
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="title_label" type="Label" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox" unique_id=856358467]
+[node name="TitleLabel" type="Label" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox" unique_id=856358467]
 layout_mode = 2
 text = "OPTIONS"
 horizontal_alignment = 1
 
-[node name="bgm_label" type="Label" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox" unique_id=800696957]
+[node name="BgmLabel" type="Label" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox" unique_id=800696957]
 layout_mode = 2
 text = "MUSIC VOLUME"
 horizontal_alignment = 1
 
-[node name="bgm_slider" type="HSlider" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox" unique_id=413891890]
+[node name="BgmSlider" type="HSlider" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox" unique_id=413891890]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 min_value = -40.0
 max_value = 0.0
 
-[node name="sfx_label" type="Label" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox" unique_id=341624475]
+[node name="SfxLabel" type="Label" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox" unique_id=341624475]
 layout_mode = 2
 text = "SFX VOLUME"
 horizontal_alignment = 1
 
-[node name="sfx_slider" type="HSlider" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox" unique_id=1667525781]
+[node name="SfxSlider" type="HSlider" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox" unique_id=1667525781]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 min_value = -40.0
 max_value = 0.0
 
-[node name="crt_row" type="HBoxContainer" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox" unique_id=3767806]
+[node name="CrtRow" type="HBoxContainer" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox" unique_id=3767806]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="crt_label" type="Label" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox/crt_row" unique_id=948290103]
+[node name="CrtLabel" type="Label" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox/CrtRow" unique_id=948290103]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "CRT EFFECT"
 horizontal_alignment = 1
 
-[node name="crt_toggle" type="CheckButton" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox/crt_row" unique_id=74351493]
+[node name="CrtToggle" type="CheckButton" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox/CrtRow" unique_id=74351493]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
@@ -94,22 +97,24 @@ theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 text = "ON	"
 
-[node name="back_button" type="Button" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox" unique_id=603364706]
+[node name="BackButton" type="Button" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox" unique_id=603364706]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "BACK"
 
-[node name="toggle_sound" type="AudioStreamPlayer" parent="menu_ui/CenterContainer/panel/MarginContainer/vbox" unique_id=840097123]
+[node name="ToggleSfx" type="AudioStreamPlayer" parent="MenuUI/CenterContainer/Panel/MarginContainer/VBox" unique_id=840097123]
+unique_name_in_owner = true
 process_mode = 3
 stream = ExtResource("2_saexc")
 bus = &"SFX"
 
-[node name="hover_sound" type="AudioStreamPlayer" parent="." unique_id=33136778]
+[node name="HoverSfx" type="AudioStreamPlayer" parent="." unique_id=33136778]
 process_mode = 3
 stream = ExtResource("1_m2ri5")
 bus = &"SFX"
 
-[node name="select_sound" type="AudioStreamPlayer" parent="." unique_id=1282785687]
+[node name="SelectSfx" type="AudioStreamPlayer" parent="." unique_id=1282785687]
 process_mode = 3
 stream = ExtResource("1_tgcvl")
 bus = &"SFX"
