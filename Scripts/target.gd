@@ -1,6 +1,6 @@
 extends Area2D
 
-@onready var hit_targetfx: AudioStreamPlayer = $hit_targetfx
+@onready var hit_targetfx: AudioStreamPlayer = $HitTargetSfx
 
 
 func _ready() -> void:

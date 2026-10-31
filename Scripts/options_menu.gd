@@ -67,7 +67,7 @@ func _load_settings() -> void:
 
 	crt_toggle.button_pressed = crt_on
 	crt_toggle.text = "ON" if crt_on else "OFF"
-	CRTOverlay.get_node("screen").visible = crt_on
+	CRTOverlay.get_node("Screen").visible = crt_on
 
 
 func _on_bgm_changed(value: float) -> void:
@@ -85,7 +85,7 @@ func _on_sfx_changed(value: float) -> void:
 func _on_crt_toggled(button_pressed: bool) -> void:
 	crt_toggle.text = "ON" if button_pressed else "OFF"
 	toggle_sound.play()
-	CRTOverlay.get_node("screen").visible = button_pressed
+	CRTOverlay.get_node("Screen").visible = button_pressed
 	config.set_value("video", "crt_enabled", button_pressed)
 	config.save(SAVE_PATH)
 

@@ -13,7 +13,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
+	if body is Player:
 		body.take_damage(15)
 		queue_free()
 

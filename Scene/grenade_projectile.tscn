@@ -21,7 +21,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_yea01"]
 radius = 8.0
 
-[node name="grenade_projectile" type="Area2D" unique_id=48881923]
+[node name="GrenadeProjectile" type="Area2D" unique_id=48881923]
 script = ExtResource("1_4btxn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1591976766]

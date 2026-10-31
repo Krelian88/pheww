@@ -6,7 +6,7 @@ extends Area2D
 @export var damage := 1
 @export var bullet_type: String = ""
 var hit := false
-@onready var anim: AnimatedSprite2D = $anim
+@onready var anim: AnimatedSprite2D = $Anim
 # VARIABLES END ***********************************
 
 

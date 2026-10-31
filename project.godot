@@ -33,7 +33,7 @@ DialogueManager="*uid://c3rodes2l3gxb"
 
 [debug]
 
-gdscript/warnings/untyped_declaration=1
+gdscript/warnings/untyped_declaration=2
 
 [display]
 

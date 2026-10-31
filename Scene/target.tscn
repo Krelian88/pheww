@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2mjf"]
 size = Vector2(68, 70)
 
-[node name="target" type="Area2D" unique_id=1654096610]
+[node name="Target" type="Area2D" unique_id=1654096610]
 script = ExtResource("1_l2mjf")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=248402473]
@@ -19,7 +19,7 @@ texture = ExtResource("1_grphj")
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_l2mjf")
 
-[node name="hit_targetfx" type="AudioStreamPlayer" parent="." unique_id=2020093202]
+[node name="HitTargetSfx" type="AudioStreamPlayer" parent="." unique_id=2020093202]
 stream = ExtResource("3_o0o2g")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

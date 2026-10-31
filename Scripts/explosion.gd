@@ -2,13 +2,13 @@ extends Area2D
 
 # VARIABLES START HERE: *******************************
 @export var damage := 3
-@onready var anim: AnimatedSprite2D = $anim
+@onready var anim: AnimatedSprite2D = $Anim
 # VARIABLES END ***********************************
 
 
 # FUNCTIONS START HERE: ************************************
 func _ready() -> void:
-	$explosion_sound.play()
+	$ExplosionSound.play()
 	anim.play("explode")
 	anim.animation_finished.connect(_on_animation_finished)
 	await get_tree().physics_frame
@@ -19,6 +19,6 @@ func _ready() -> void:
 
 func _on_animation_finished() -> void:
 	anim.visible = false
-	await $explosion_sound.finished
+	await $ExplosionSound.finished
 	queue_free()
 # FUNCTIONS END ******************************************

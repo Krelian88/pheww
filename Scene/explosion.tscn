@@ -57,7 +57,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="explosion" type="Area2D" unique_id=1375567576]
+[node name="Explosion" type="Area2D" unique_id=1375567576]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_w8ob6")
@@ -65,11 +65,11 @@ script = ExtResource("1_w8ob6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1339514981]
 shape = SubResource("CircleShape2D_mko8c")
 
-[node name="explosion_sound" type="AudioStreamPlayer" parent="." unique_id=636934352]
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="." unique_id=636934352]
 stream = ExtResource("2_mko8c")
 bus = &"SFX"
 
-[node name="anim" type="AnimatedSprite2D" parent="." unique_id=1584748869]
+[node name="Anim" type="AnimatedSprite2D" parent="." unique_id=1584748869]
 scale = Vector2(2.24, 2.2400002)
 sprite_frames = SubResource("SpriteFrames_xoi3l")
 animation = &"explode"

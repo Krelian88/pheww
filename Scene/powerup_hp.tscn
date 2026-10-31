@@ -21,7 +21,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_r84i4"]
 radius = 16.0
 
-[node name="powerup_hp" type="Area2D" unique_id=655657752]
+[node name="PowerupHp" type="Area2D" unique_id=655657752]
 script = ExtResource("1_tos1a")
 type = 2
 

@@ -57,7 +57,7 @@ frame_progress = 0.59623945
 position = Vector2(-1.125, 1.375)
 shape = SubResource("RectangleShape2D_5e757")
 
-[node name="coinfx" type="AudioStreamPlayer" parent="." unique_id=755051431]
+[node name="CoinSfx" type="AudioStreamPlayer" parent="." unique_id=755051431]
 stream = ExtResource("3_1g4lx")
 volume_db = -10.035
 

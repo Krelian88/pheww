@@ -13,10 +13,10 @@ shader_parameter/vignette_intensity = 0.4
 shader_parameter/aberration = 0.002
 shader_parameter/brightness = 1.1
 
-[node name="crt_overlay" type="CanvasLayer" unique_id=97978722]
+[node name="CRTOverlay" type="CanvasLayer" unique_id=97978722]
 layer = 100
 
-[node name="screen" type="ColorRect" parent="." unique_id=1808775488]
+[node name="Screen" type="ColorRect" parent="." unique_id=1808775488]
 material = SubResource("ShaderMaterial_iws6x")
 anchors_preset = 15
 anchor_right = 1.0

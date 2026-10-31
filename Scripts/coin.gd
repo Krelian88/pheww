@@ -1,6 +1,6 @@
 extends Area2D
 
-@onready var coin_sound: AudioStreamPlayer = $coinfx
+@onready var coin_sound: AudioStreamPlayer = $CoinSfx
 
 
 # Called when the node enters the scene tree for the first time.
@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
+	if body is Player:
 		coin_sound.play()
 		var vp_w := int(get_viewport_rect().size.x)
 		global_position.x = randi_range(60, vp_w - 60)

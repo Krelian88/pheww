@@ -21,7 +21,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_royog"]
 radius = 16.0
 
-[node name="powerup_grenade" type="Area2D" unique_id=2043562619]
+[node name="PowerupGrenade" type="Area2D" unique_id=2043562619]
 script = ExtResource("1_v2lt8")
 type = 3
 
