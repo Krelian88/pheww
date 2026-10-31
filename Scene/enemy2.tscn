@@ -81,7 +81,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="enemy2" type="CharacterBody2D" unique_id=1766807267 groups=["Enemies"]]
+[node name="Enemy2" type="CharacterBody2D" unique_id=1766807267 groups=["Enemies"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_4w621")
@@ -93,19 +93,19 @@ texture = ExtResource("2_fkhb3")
 position = Vector2(-3.5, -0.5)
 shape = SubResource("RectangleShape2D_4jekx")
 
-[node name="die_sound" type="AudioStreamPlayer" parent="." unique_id=1225331332]
+[node name="DieSfx" type="AudioStreamPlayer" parent="." unique_id=1225331332]
 stream = ExtResource("3_fkhb3")
 pitch_scale = 0.6
 bus = &"SFX"
 
-[node name="death_anim" type="AnimatedSprite2D" parent="." unique_id=1427781519]
+[node name="DeathAnim" type="AnimatedSprite2D" parent="." unique_id=1427781519]
 visible = false
 sprite_frames = SubResource("SpriteFrames_3mlo3")
 animation = &"die"
 frame = 3
 frame_progress = 1.0
 
-[node name="walk_anim" type="AnimatedSprite2D" parent="." unique_id=214811966]
+[node name="WalkAnim" type="AnimatedSprite2D" parent="." unique_id=214811966]
 sprite_frames = SubResource("SpriteFrames_bamq1")
 animation = &"walk"
 frame_progress = 0.6565687

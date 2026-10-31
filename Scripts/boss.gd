@@ -42,8 +42,8 @@ var is_entering := true # Frozen until entrance animation completes
 # DEATH ANIMATION
 var _is_dead := false
 
-@onready var death_anim: AnimatedSprite2D = $death_anim
-@onready var boss_die_sound: AudioStreamPlayer = $boss_die_sound
+@onready var death_anim: AnimatedSprite2D = $DeathAnim
+@onready var boss_die_sound: AudioStreamPlayer = $DieSfx
 
 
 func _ready() -> void:

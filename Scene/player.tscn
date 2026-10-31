@@ -193,7 +193,7 @@ position = Vector2(11, -5)
 collision_layer = 0
 collision_mask = 2
 
-[node name="hitbox" type="CollisionShape2D" parent="Hitbox" unique_id=339642195]
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox" unique_id=339642195]
 position = Vector2(-1, 1)
 shape = SubResource("CapsuleShape2D_58ae2")
 
@@ -213,44 +213,44 @@ parameters/Idle/blend_position = Vector2(-0.0024330616, 0.98734176)
 deterministic = true
 libraries/ = SubResource("AnimationLibrary_p6qlh")
 
-[node name="gun_shot" type="AudioStreamPlayer" parent="." unique_id=1812492906]
+[node name="GunShotSfx" type="AudioStreamPlayer" parent="." unique_id=1812492906]
 stream = ExtResource("5_ivevv")
 bus = &"SFX"
 
-[node name="triple_shot_sound" type="AudioStreamPlayer" parent="." unique_id=177747418]
+[node name="TripleShotSfx" type="AudioStreamPlayer" parent="." unique_id=177747418]
 stream = ExtResource("6_c31lq")
 bus = &"SFX"
 
-[node name="rapid_shot_sound" type="AudioStreamPlayer" parent="." unique_id=978891155]
+[node name="RapidShotSfx" type="AudioStreamPlayer" parent="." unique_id=978891155]
 stream = ExtResource("7_2dof7")
 bus = &"SFX"
 
-[node name="grenade_throw_sound" type="AudioStreamPlayer" parent="." unique_id=1522100941]
+[node name="GrenadeThrowSfx" type="AudioStreamPlayer" parent="." unique_id=1522100941]
 stream = ExtResource("8_4ao7i")
 volume_db = 4.0
 bus = &"SFX"
 
-[node name="hp_powerup_sound" type="AudioStreamPlayer" parent="." unique_id=80512641]
+[node name="HpPowerupSfx" type="AudioStreamPlayer" parent="." unique_id=80512641]
 stream = ExtResource("9_1sypm")
 bus = &"SFX"
 
-[node name="special_ammo_sound" type="AudioStreamPlayer" parent="." unique_id=1526133272]
+[node name="SpecialAmmoSfx" type="AudioStreamPlayer" parent="." unique_id=1526133272]
 stream = ExtResource("10_fn0wv")
 volume_db = 4.0
 bus = &"SFX"
 
-[node name="grenade_pickup_sound" type="AudioStreamPlayer" parent="." unique_id=1289796407]
+[node name="GrenadePickupSfx" type="AudioStreamPlayer" parent="." unique_id=1289796407]
 stream = ExtResource("11_eqmt2")
 volume_db = 4.0
 bus = &"SFX"
 
-[node name="run_anim" type="AnimatedSprite2D" parent="." unique_id=638363820]
+[node name="RunAnim" type="AnimatedSprite2D" parent="." unique_id=638363820]
 visible = false
 sprite_frames = SubResource("SpriteFrames_lgjog")
 animation = &"run_up"
 frame_progress = 0.74208516
 
-[node name="death_anim" type="AnimatedSprite2D" parent="." unique_id=864938410]
+[node name="DeathAnim" type="AnimatedSprite2D" parent="." unique_id=864938410]
 visible = false
 sprite_frames = SubResource("SpriteFrames_1vqkc")
 animation = &"die"

@@ -65,7 +65,7 @@ script = ExtResource("1_w8ob6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1339514981]
 shape = SubResource("CircleShape2D_mko8c")
 
-[node name="ExplosionSound" type="AudioStreamPlayer" parent="." unique_id=636934352]
+[node name="ExplosionSfx" type="AudioStreamPlayer" parent="." unique_id=636934352]
 stream = ExtResource("2_mko8c")
 bus = &"SFX"
 

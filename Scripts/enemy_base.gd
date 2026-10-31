@@ -19,9 +19,9 @@ var _pause_timer := -1.0 # -1 means not yet initialised
 var _is_paused := false
 var _is_dead := false
 var points: int = 0
-@onready var die_sound: AudioStreamPlayer = $die_sound
-@onready var death_anim: AnimatedSprite2D = $death_anim
-@onready var walk_anim: AnimatedSprite2D = $walk_anim
+@onready var die_sound: AudioStreamPlayer = $DieSfx
+@onready var death_anim: AnimatedSprite2D = $DeathAnim
+@onready var walk_anim: AnimatedSprite2D = $WalkAnim
 # VARIABLES END *************************************
 
 

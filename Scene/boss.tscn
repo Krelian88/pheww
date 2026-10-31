@@ -44,7 +44,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="boss" type="CharacterBody2D" unique_id=1314417932]
+[node name="Boss" type="CharacterBody2D" unique_id=1314417932]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_bv8a7")
@@ -61,7 +61,7 @@ texture = ExtResource("2_bv8a7")
 position = Vector2(2, 5.5)
 shape = SubResource("RectangleShape2D_bv8a7")
 
-[node name="death_anim" type="AnimatedSprite2D" parent="." unique_id=850288187]
+[node name="DeathAnim" type="AnimatedSprite2D" parent="." unique_id=850288187]
 visible = false
 scale = Vector2(1.2421876, 1.2421873)
 sprite_frames = SubResource("SpriteFrames_hrqh5")
@@ -69,6 +69,6 @@ animation = &"die"
 frame = 3
 frame_progress = 1.0
 
-[node name="boss_die_sound" type="AudioStreamPlayer" parent="." unique_id=1640727967]
+[node name="DieSfx" type="AudioStreamPlayer" parent="." unique_id=1640727967]
 stream = ExtResource("4_lcnog")
 bus = &"SFX"

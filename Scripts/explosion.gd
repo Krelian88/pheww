@@ -8,7 +8,7 @@ extends Area2D
 
 # FUNCTIONS START HERE: ************************************
 func _ready() -> void:
-	$ExplosionSound.play()
+	$ExplosionSfx.play()
 	anim.play("explode")
 	anim.animation_finished.connect(_on_animation_finished)
 	await get_tree().physics_frame
@@ -19,6 +19,6 @@ func _ready() -> void:
 
 func _on_animation_finished() -> void:
 	anim.visible = false
-	await $ExplosionSound.finished
+	await $ExplosionSfx.finished
 	queue_free()
 # FUNCTIONS END ******************************************

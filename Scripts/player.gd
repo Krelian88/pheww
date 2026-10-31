@@ -4,14 +4,14 @@ extends CharacterBody2D
 enum WeaponMode { NORMAL, TRIPLE, RAPID }
 
 # VARIABLES STARTS: *****************************************************
-@onready var shoot_sound: AudioStreamPlayer = $gun_shot
+@onready var shoot_sound: AudioStreamPlayer = $GunShotSfx
 @onready var camera: Camera2D = $Camera2D
-@onready var triple_shot_sound: AudioStreamPlayer = $triple_shot_sound
-@onready var rapid_shot_sound: AudioStreamPlayer = $rapid_shot_sound
-@onready var grenade_throw_sound: AudioStreamPlayer = $grenade_throw_sound
-@onready var hp_powerup_sound: AudioStreamPlayer = $hp_powerup_sound
-@onready var special_ammo_sound: AudioStreamPlayer = $special_ammo_sound
-@onready var grenade_pickup_sound: AudioStreamPlayer = $grenade_pickup_sound
+@onready var triple_shot_sound: AudioStreamPlayer = $TripleShotSfx
+@onready var rapid_shot_sound: AudioStreamPlayer = $RapidShotSfx
+@onready var grenade_throw_sound: AudioStreamPlayer = $GrenadeThrowSfx
+@onready var hp_powerup_sound: AudioStreamPlayer = $HpPowerupSfx
+@onready var special_ammo_sound: AudioStreamPlayer = $SpecialAmmoSfx
+@onready var grenade_pickup_sound: AudioStreamPlayer = $GrenadePickupSfx
 var input_enabled := true
 var is_jumping := false
 var bullet: PackedScene = preload("res://Scene/bullet.tscn")
@@ -33,9 +33,9 @@ var grenade_scene: PackedScene = preload("res://Scene/grenade_projectile.tscn")
 var lives := 3
 var _is_dead := false
 var _blink_tween: Tween
-@onready var run_anim: AnimatedSprite2D = $run_anim
+@onready var run_anim: AnimatedSprite2D = $RunAnim
 var force_run := false
-@onready var death_anim: AnimatedSprite2D = $death_anim
+@onready var death_anim: AnimatedSprite2D = $DeathAnim
 #VARIABLES END *******************************************************
 
 # SIGNALS START HERE: ***********************************************
