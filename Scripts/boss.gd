@@ -51,7 +51,7 @@ func _ready() -> void:
 	speed = SPEED_PHASE_1
 	add_to_group("Enemies")
 	player = get_parent().get_node("Player")
-	segment_manager = get_parent().get_node("segment_manager")
+	segment_manager = get_parent().get_node("SegmentManager")
 	_start_shoot_timer()
 	_start_charge_timer()
 

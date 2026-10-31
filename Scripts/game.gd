@@ -1,19 +1,20 @@
 extends Node2D
 
 # ONREADY VAR START HERE: ******************************************
-@onready var bgm: AudioStreamPlayer = $bgm
-@onready var boss_bgm: AudioStreamPlayer = $boss_bgm
-@onready var segment_manager: SegmentManager = $segment_manager
-@onready var indicator_sfx: AudioStreamPlayer = $indicator_sfx
-@onready var move_indicator_left: AnimatedSprite2D = $CanvasLayer/move_indicator_left
-@onready var move_indicator_right: AnimatedSprite2D = $CanvasLayer/move_indicator_right
-@onready var ammo_bar: TextureProgressBar = $CanvasLayer/ammo_bar
-@onready var grenade_icon: TextureRect = $CanvasLayer/grenade_icon
-@onready var grenade_count_label: Label = $CanvasLayer/grenade_count_label
+@onready var bgm: AudioStreamPlayer = $Bgm
+@onready var boss_bgm: AudioStreamPlayer = $BossBgm
+@onready var segment_manager: SegmentManager = $SegmentManager
+@onready var indicator_sfx: AudioStreamPlayer = $IndicatorSfx
+@onready var move_indicator_left: AnimatedSprite2D = %MoveIndicatorLeft
+@onready var move_indicator_right: AnimatedSprite2D = %MoveIndicatorRight
+@onready var ammo_bar: TextureProgressBar = %AmmoBar
+@onready var grenade_icon: TextureRect = %GrenadeIcon
+@onready var grenade_count_label: Label = %GrenadeCountLabel
 @onready var player: Player = $Player
-@onready var life_1: TextureRect = $CanvasLayer/life_1
-@onready var life_2: TextureRect = $CanvasLayer/life_2
-@onready var score_label: Label = $CanvasLayer/score_label
+@onready var life_1: TextureRect = %Life1
+@onready var life_2: TextureRect = %Life2
+@onready var score_label: Label = %ScoreLabel
+@onready var hp_bar: TextureProgressBar = %HpBar
 # ONREADY VAR ENDS *********************************************
 
 # VARIABLES START HERE: *************************************************
@@ -127,7 +128,7 @@ func _on_health_changed(new_health: int) -> void:
 	_hp_tween = create_tween()
 	_hp_tween.set_ease(Tween.EASE_OUT)
 	_hp_tween.set_trans(Tween.TRANS_QUAD)
-	_hp_tween.tween_property($CanvasLayer/hp_bar, "value", float(new_health), 0.3)
+	_hp_tween.tween_property(hp_bar, "value", float(new_health), 0.3)
 
 
 func _on_lives_changed(new_lives: int) -> void:
